@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Implementation of hook_form_FORM_ID_alter()
+ */
+function contact_by_url_form_contact_site_form_alter(&$form, &$form_state) {
+  if((array_key_exists('cid', $_GET) || array_key_exists('category', $_GET)) && isset($form['cid'])) {
+    foreach($form['cid']['#options'] as $key => $entry) {
+      if($key == $_GET['cid']) {
+        $form['cid']['#default_value'] = $key;
+      }
+
+      if($_GET['category'] == str_replace(' ', '_', strtolower($entry))){
+        $form['cid']['#default_value'] = $key;
+      }
+    }
+  }
+}
